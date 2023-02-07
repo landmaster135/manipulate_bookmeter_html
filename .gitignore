@@ -127,3 +127,21 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+### macOS ###
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+# Thumbnails
+._*
+
+### Docker ###
+.dockerignore
+Dockerfile
+
+### VSCode ###
+.vscode/*
+
+### others ###
+test_data/*.mov
