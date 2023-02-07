@@ -1,0 +1,71 @@
+name: Get Snippet
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        type: choice
+        default: 'info'
+        options:
+        - info
+        - warning
+        - debug
+
+jobs:
+  generate_issues:
+    name: Get Snippet
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .
+    env:
+        COMMIT_COMMENT: Generate html by beautifulsoup
+        POSTS_FOLDER: past_posts
+        RESPONSES_FOLDER: past_responses
+    steps:
+
+    # Repo code checkout required if `template` is used
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Setup Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.9'
+        architecture: 'x64'
+
+    - name: Get Python version
+      run: python -V
+
+    # https://stackoverflow.com/a/60942437
+    - name: Get current date
+      id: date
+      run: echo "date=$(date +'%Y/%m/%d')" >>$GITHUB_OUTPUT
+
+    - name: Print ls result
+      id: ls
+      run: ls
+
+    - name: Install dependencies
+      run: pip install --no-cache-dir -r requirements.txt
+
+    - name: Print inputs
+      run: |
+        echo "YEAR is ${YEAR}"
+        echo "MONTH is ${MONTH}"
+
+    - name: ${{ env.COMMIT_COMMENT }}
+      run: python "./src/manipulate_bookmeter_html/main.py" ${YEAR} ${MONTH}
+
+    - name: Git setting
+      run: |
+        git config --local user.email "52403447+landmaster135@users.noreply.github.com"
+        git config --local user.name "landmaster135"
+
+    - name: Git commit
+      run: |
+        git log -1
+        git add "./${{ env.POSTS_FOLDER }}/${{ env.YEAR }}${{ env.MONTH }}.html"
+        git add "./${{ env.RESPONSES_FOLDER }}/${{ env.YEAR }}${{ env.MONTH }}.json"
+        git diff --cached --quiet || (git commit -m "${{ env.COMMIT_COMMENT }}" && git push origin main)
