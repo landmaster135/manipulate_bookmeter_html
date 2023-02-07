@@ -2,6 +2,7 @@
 
 # Library by default
 import os
+import subprocess
 # Library by local
 from config import get_config
 from manipulate import manipulate_bookmeter_html
@@ -46,7 +47,8 @@ def main():
     for f in yet_files:
         print("======================= File name ===========================")
         print(f"f\n")
-        bookmeter_html = read_file(f"./{BEFORE_HTML}/{f}")
+        file_path = f"./{BEFORE_HTML}/{f}"
+        bookmeter_html = read_file(file_path)
         soup = manipulate_bookmeter_html(bookmeter_html)
         print("======================= prettify start ===========================")
         blog_article = soup.prettify()
@@ -56,7 +58,7 @@ def main():
         # pc.copy(blog_article)
         # print("copied to your clipboard!")
         print("======================= prettify end ===========================")
-
+        subprocess.run(f"git add {file_path}", shell=True)
 
 if __name__ == "__main__":
     main()

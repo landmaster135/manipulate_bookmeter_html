@@ -21,8 +21,6 @@ jobs:
         working-directory: .
     env:
         COMMIT_COMMENT: Generate html by beautifulsoup
-        POSTS_FOLDER: past_posts
-        RESPONSES_FOLDER: past_responses
     steps:
 
     # Repo code checkout required if `template` is used
@@ -50,13 +48,8 @@ jobs:
     - name: Install dependencies
       run: pip install --no-cache-dir -r requirements.txt
 
-    - name: Print inputs
-      run: |
-        echo "YEAR is ${YEAR}"
-        echo "MONTH is ${MONTH}"
-
-    - name: ${{ env.COMMIT_COMMENT }}
-      run: python "./src/manipulate_bookmeter_html/main.py" ${YEAR} ${MONTH}
+    - name: ${{ env.COMMIT_COMMENT }} and Git add
+      run: python "./src/manipulate_bookmeter_html/main.py"
 
     - name: Git setting
       run: |
@@ -66,6 +59,4 @@ jobs:
     - name: Git commit
       run: |
         git log -1
-        git add "./${{ env.POSTS_FOLDER }}/${{ env.YEAR }}${{ env.MONTH }}.html"
-        git add "./${{ env.RESPONSES_FOLDER }}/${{ env.YEAR }}${{ env.MONTH }}.json"
         git diff --cached --quiet || (git commit -m "${{ env.COMMIT_COMMENT }}" && git push origin main)
