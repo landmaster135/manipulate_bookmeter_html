@@ -8,7 +8,7 @@
 
 [Here](https://bookmeter.com/users/1313175).
 
-### 3. Make "Before" file
+### 2. Make "Before" file
 
 Visit "読書管理>まとめ>ブログでまとめる".
 
@@ -18,13 +18,13 @@ Visit "読書管理>まとめ>ブログでまとめる".
 2. Paste into new file in this repo folder: `history_of_before`.
 
 ![](./img/02_02.jpg)
-### 4. Generate "After" file
+### 3. Generate "After" file
 
 Execute Github Actions: `Transform HTML`.
 
 ![](./img/02_03.jpg)
 
-### 5. Done.
+### 4. Done.
 
 You'll find the blog article to post in `history_of_after` folder.
 
