@@ -15,12 +15,14 @@ Visit "読書管理>まとめ>ブログでまとめる".
 ![](./img/02_01.jpg)
 
 1. Copy HTML on the bottom.
-2. Paste into new file in this repo folder: `history_of_before`
+2. Paste into new file in this repo folder: `history_of_before`.
 
 ![](./img/02_02.jpg)
 ### 4. Generate "After" file
 
-Execute Github Actions: ``
+Execute Github Actions: `Transform HTML`.
+
+![](./img/02_03.jpg)
 
 ### 5. Done.
 
@@ -30,4 +32,5 @@ You'll find the blog article to post in `history_of_after` folder.
 
 | When | Category | What | Why | Published |
 |---|---|---|---|---|
+|02-07-2023|Enhancement|Adds Github Actions.|To run with the browser.|Yes|
 |02-07-2023|Fixed|Rewrites Jupyter Notebook to Python file.|Code had been cluttered.|Yes|
