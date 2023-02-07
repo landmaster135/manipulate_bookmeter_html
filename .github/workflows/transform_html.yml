@@ -1,4 +1,4 @@
-name: Get Snippet
+name: Transform HTML
 on:
   workflow_dispatch:
     inputs:
@@ -14,7 +14,7 @@ on:
 
 jobs:
   generate_issues:
-    name: Get Snippet
+    name: Transform HTML
     runs-on: ubuntu-latest
     defaults:
       run:
