@@ -48,13 +48,13 @@ jobs:
     - name: Install dependencies
       run: pip install --no-cache-dir -r requirements.txt
 
-    - name: ${{ env.COMMIT_COMMENT }} and Git add
-      run: python "./src/manipulate_bookmeter_html/main.py"
-
     - name: Git setting
       run: |
         git config --local user.email "52403447+landmaster135@users.noreply.github.com"
         git config --local user.name "landmaster135"
+
+    - name: ${{ env.COMMIT_COMMENT }} and Git add
+      run: python "./src/manipulate_bookmeter_html/main.py"
 
     - name: Git commit
       run: |
