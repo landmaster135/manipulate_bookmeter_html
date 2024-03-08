@@ -64,7 +64,7 @@ jobs:
     - name: Record log
       run: |
         curl '${{ env.SCRIPT_MANAGER_API_ENDPOINT }}?scriptname=${{ env.MY_SCRIPT_NAME }}&function-name=${{ env.THIS_FUNCTION_NAME }}' \
-        -X POST \
+        -L \
         -H "Content-Type: application/json" \
         -d '{"path": "/log", "method": "POST", "client_info": {"id": "${{ env.SCRIPT_MANAGER_API_CLIENT_ID }}", "secret": "${{ env.SCRIPT_MANAGER_API_CLIENT_SECRET }}"}}'
 
