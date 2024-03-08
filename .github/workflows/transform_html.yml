@@ -1,4 +1,4 @@
-name: Transform HTML
+name: Transform-Html
 on:
   workflow_dispatch:
     inputs:
@@ -14,13 +14,18 @@ on:
 
 jobs:
   generate_issues:
-    name: Transform HTML
+    name: Transform-Html
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: .
     env:
         COMMIT_COMMENT: Generate html by beautifulsoup
+        SCRIPT_MANAGER_API_CLIENT_ID: ${{ secrets.SCRIPT_MANAGER_API_CLIENT_ID }}
+        SCRIPT_MANAGER_API_CLIENT_SECRET: ${{ secrets.SCRIPT_MANAGER_API_CLIENT_SECRET }}
+        SCRIPT_MANAGER_API_ENDPOINT: ${{ secrets.SCRIPT_MANAGER_API_ENDPOINT }}
+        MY_SCRIPT_NAME: 'manipulate_bookmeter_html'
+        THIS_FUNCTION_NAME: 'Transform-Html'
     steps:
 
     # Repo code checkout required if `template` is used
@@ -55,6 +60,13 @@ jobs:
 
     - name: ${{ env.COMMIT_COMMENT }} and Git add
       run: python "./src/manipulate_bookmeter_html/main.py"
+
+    - name: Record log
+      run: |
+        curl '${{ env.SCRIPT_MANAGER_API_ENDPOINT }}?scriptname=${{ env.MY_SCRIPT_NAME }}&function-name=${{ env.THIS_FUNCTION_NAME }}' \
+        -X POST \
+        -H "Content-Type: application/json" \
+        -d '{"path": "/log", "method": "POST", "client_info": {"id": "${{ env.SCRIPT_MANAGER_API_CLIENT_ID }}", "secret": "${{ env.SCRIPT_MANAGER_API_CLIENT_SECRET }}"}}'
 
     - name: Git commit
       run: |
